@@ -1,6 +1,5 @@
 import json
 
-
 class ModelAI:
     licznik = 0
 
