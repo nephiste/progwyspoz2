@@ -2,116 +2,21 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Mini Portal</title>
+    <title>Mini Portal z Zadaniami</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Witaj na stronie z taskami!</h1>
+
+    <h1>Lista Zadań</h1>
+
     <button onClick="removeTasks()">Zresetuj liste</button>
     <p>Wpisz nazwę zadania:</p>
     <input id="taskInput" type="text" />
     <button onclick="addTask()">Dodaj zadanie</button>
 
     <h2>Twoje zadania:</h2>
-    <ul id="taskList">
-        <!-- Lista zadań będzie tutaj wyświetlana -->
-    </ul>
+    <ul id="taskList"></ul>
 
-    <script>
-
-        function removeTasks()
-        {
-            localStorage.clear();
-            displayTasks();
-
-        }
-
-        // Funkcja dodająca zadanie do localStorage
-
-
-        function addTask() {
-            const taskInput = document.getElementById("taskInput");
-            const task = taskInput.value.trim();  // Pobieramy tekst z inputa i usuwamy nadmiarowe spacje
-
-            if (task === "") {
-                alert("Proszę wpisać nazwę zadania!");
-                return;
-            }
-
-            // Pobieramy obecne zadania z localStorage, jeśli są
-            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-            // Tworzymy nowe zadanie z domyślnym stanem 'completed: false'
-            const newTask = {
-                name: task,
-                completed: false
-            };
-
-            // Dodajemy nowe zadanie do tablicy
-            tasks.push(newTask);
-
-            // Zapisujemy zaktualizowaną tablicę w localStorage
-            localStorage.setItem("tasks", JSON.stringify(tasks));
-
-            // Czyścimy pole input
-            taskInput.value = "";
-
-            // Odświeżamy listę zadań
-            displayTasks();
-        }
-
-        // Funkcja wyświetlająca zadania z localStorage
-        function displayTasks() {
-            const taskList = document.getElementById("taskList");
-            taskList.innerHTML = "";  // Czyścimy listę, zanim dodamy nowe zadania
-
-            // Pobieramy zadania z localStorage
-            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-            // Dla każdego zadania tworzymy element listy <li>
-            tasks.forEach(function(task, index) {
-                const li = document.createElement("li");
-
-                // Tworzymy checkbox
-                const checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.checked = task.completed;
-                checkbox.onclick = function() {
-                    toggleTaskCompletion(index);
-                };
-
-                // Tworzymy tekst zadania
-                const taskText = document.createElement("span");
-                taskText.textContent = task.name;
-                taskText.style.textDecoration = task.completed ? 'line-through' : 'none'; // Przekreślenie ukończonych zadań
-
-                // Dodajemy checkbox i tekst zadania do elementu li
-                li.appendChild(checkbox);
-                li.appendChild(taskText);
-
-                // Dodajemy li do listy
-                taskList.appendChild(li);
-            });
-        }
-
-        // Funkcja zmieniająca stan zadania na ukończone/nieukończone
-        function toggleTaskCompletion(index) {
-            // Pobieramy zadania z localStorage
-            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-            // Zmieniamy stan ukończenia zadania
-            tasks[index].completed = !tasks[index].completed;
-
-            // Zapisujemy zaktualizowaną tablicę w localStorage
-            localStorage.setItem("tasks", JSON.stringify(tasks));
-
-            // Odświeżamy listę zadań
-            displayTasks();
-        }
-
-        // Wywołaj displayTasks, aby od razu wyświetlić zadania po załadowaniu strony
-        window.onload = function() {
-            displayTasks();
-        };
-    </script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>

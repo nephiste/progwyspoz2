@@ -1,10 +1,9 @@
-from flask import Flask, render_template, abort
+from flask import Flask, render_template
 
-# Tworzenie aplikacji Flask
 app = Flask(__name__)
 
 @app.route('/')
-def home():
+def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
