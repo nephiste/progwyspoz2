@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Użytkownicy</title>
+</head>
+<body>
+    <h1>Lista użytkowników</h1>
+    <ul>
+        {% for user_id, user_info in users.items() %}
+            <li><a href="/user/{{ user_id }}">{{ user_info['name'] }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="/">Powrót do strony głównej</a>
+</body>
+</html>
